@@ -1,24 +1,42 @@
 import os
 from scraper import get_card_links, retry_scraping, set_edition
 from utils import fix_empty_cards
-from enums import FxEditions
+from enums import FxEditions, PbEditions, PeEditions, SbEditions, ImperioEditions
 import random
 import json
 import time
 import logging
 
-def select_edition():
+def select_format():
+    formats = {
+        1: ("Primera Era", PeEditions),
+        2: ("Primer Bloque", PbEditions),
+        3: ("Segundo Bloque", SbEditions),
+        4: ("Furia Extendido", FxEditions),
+        5: ("Imperio", ImperioEditions)
+    }
+    
+    print("Please select a format:")
+    for i, (name, _) in formats.items():
+        print(f"{i}. {name}")
+
+    choice = int(input("Enter the number of the format: "))
+    selected_format = formats[choice][1]
+    return selected_format
+
+def select_edition(format_enum):
     print("Please select an edition:")
-    for i, edition in enumerate(FxEditions, 1):
+    for i, edition in enumerate(format_enum, 1):
         print(f"{i}. {edition.name}")
 
     choice = int(input("Enter the number of the edition: "))
-    selected_edition = list(FxEditions)[choice - 1]
+    selected_edition = list(format_enum)[choice - 1]
     set_edition(selected_edition.value)
     return selected_edition.value
 
 def main():
-    edition = select_edition()
+    format_enum = select_format()
+    edition = select_edition(format_enum)
     start_time = time.time()
     print("Fetching card links...")
     card_links = get_card_links()
@@ -45,6 +63,7 @@ def main():
 
         time.sleep(random.uniform(1.5, 3))
 
+    os.makedirs("scrapped_cards", exist_ok=True)
     json_filename = os.path.join("scrapped_cards", f"cards_{edition}.json")
     with open(json_filename, "w", encoding="utf-8") as f:
         json.dump(cards_data, f, indent=4, ensure_ascii=False)

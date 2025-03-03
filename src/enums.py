@@ -1,4 +1,20 @@
 from enum import Enum
+class PeEditions(Enum):
+    EL_RETO = "el_reto"
+
+
+class PbEditions(Enum):
+    ESPADA_SAGRADA = "espada_sagrada"
+    CRUZADAS = "cruzadas"
+    HELENICA = "helenica"
+    IMPERIO = "imperio"
+    HIJOS_DE_DAANA = "hijos_de_daana"
+    TIERRAS_ALTAS = "tierras_altas"
+
+
+class SbEditions(Enum):
+    GUERRERO_JAGUAR = "guerrero_jaguar"
+
 
 class FxEditions(Enum):
     FURIA = "furia" 
@@ -17,3 +33,7 @@ class FxEditions(Enum):
     KINGDOM_QUEST = "kingdom_quest" 
     VIGILANTES = "vigilantes" 
     FURIA_ANIVERSARIO = "producto_especial_furia_aniversario" 
+
+
+class ImperioEditions(Enum):
+    SUMERIA = "sumeria"
