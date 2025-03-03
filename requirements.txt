@@ -1,0 +1,6 @@
+selenium
+beautifulsoup4
+webdriver-manager
+json
+logging
+random
