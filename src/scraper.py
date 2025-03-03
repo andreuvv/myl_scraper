@@ -1,3 +1,4 @@
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -9,19 +10,26 @@ from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 import time
 import logging
-from enums import FxEditions
 
 BASE_URL = "https://tor.myl.cl"
-EDITION = FxEditions.LEYENDAS_BLOQUE_FURIA.value
-CARDS_PAGE = f"{BASE_URL}/cartas/{EDITION}"
+# EDITION = FxEditions.KINGDOM_QUEST.value
+# CARDS_PAGE = f"{BASE_URL}/cartas/{EDITION}"
 
-log_filename = f"scrapping_{EDITION}_errors.log"
-logging.basicConfig(filename=log_filename, level=logging.WARNING, 
-                    format="%(asctime)s - %(levelname)s - %(message)s")
+# log_filename = f"scrapping_{EDITION}_errors.log"
+# logging.basicConfig(filename=log_filename, level=logging.WARNING, 
+#                     format="%(asctime)s - %(levelname)s - %(message)s")
 
 options = Options()
 options.add_argument("--headless")
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
+def set_edition(edition):
+    global EDITION, CARDS_PAGE, log_filename
+    EDITION = edition
+    CARDS_PAGE = f"{BASE_URL}/cartas/{EDITION}"
+    log_filename = os.path.join("scrapping_logs", f"scrapping_{EDITION}_errors.log")
+    logging.basicConfig(filename=log_filename, level=logging.WARNING, 
+                        format="%(asctime)s - %(levelname)s - %(message)s")
 
 def get_card_links():
     driver.get(CARDS_PAGE)

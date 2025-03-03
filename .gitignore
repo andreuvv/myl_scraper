@@ -1,0 +1,4 @@
+scrapped_cards
+scrapping_logs
+__pycache__/
+*.pyc

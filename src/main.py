@@ -1,11 +1,24 @@
-from scraper import EDITION, get_card_links, retry_scraping
+import os
+from scraper import get_card_links, retry_scraping, set_edition
 from utils import fix_empty_cards
+from enums import FxEditions
 import random
 import json
 import time
 import logging
 
+def select_edition():
+    print("Please select an edition:")
+    for i, edition in enumerate(FxEditions, 1):
+        print(f"{i}. {edition.name}")
+
+    choice = int(input("Enter the number of the edition: "))
+    selected_edition = list(FxEditions)[choice - 1]
+    set_edition(selected_edition.value)
+    return selected_edition.value
+
 def main():
+    edition = select_edition()
     start_time = time.time()
     print("Fetching card links...")
     card_links = get_card_links()
@@ -20,9 +33,11 @@ def main():
             if card_info["name"] == link:
                 logging.warning(f"Card scraping failed for {link}, only URL in the name field.")
                 cards_data.append(card_info)
+                print(card_info)
                 print(f"\033[91mCard scraping failed for {link}, only URL in the name field.\033[0m")
             else:
                 cards_data.append(card_info)
+                print(card_info)
                 print(f"\033[92m✓ Successfully scraped card {index + 1}/{len(card_links)}\033[0m")
         else:
             logging.warning(f"Skipping {link} due to failed scraping.")
@@ -30,7 +45,7 @@ def main():
 
         time.sleep(random.uniform(1.5, 3))
 
-    json_filename = f"cards_{EDITION}.json"
+    json_filename = os.path.join("scrapped_cards", f"cards_{edition}.json")
     with open(json_filename, "w", encoding="utf-8") as f:
         json.dump(cards_data, f, indent=4, ensure_ascii=False)
 
