@@ -26,7 +26,7 @@ Para configurar el proyecto necesitas tener Python instalado, luego sigue estos 
 
 1. Clona el repositorio:
    ```
-   git clone <repository-url>
+   git clone https://github.com/andreuvv/myl_scrapper.git
    cd myl_scrapper
    ```
 
@@ -42,7 +42,11 @@ Para ejecutar el scraper, ejecuta el siguiente comando:
 python src/main.py
 ```
 
-Esto iniciará el proceso de scraping, obteniendo enlaces y detalles de cartas, y guardando los resultados en un archivo JSON.
+El script the pedirá seleccionar un formato y luego una edición de la lista, con eso entrará tor.myl.cl/cartas/{edicion_seleccionada} e iniciará el proceso de extracción, obteniendo enlaces y detalles de cartas, y guardando los resultados en un archivo JSON.
+
+## Disclaimer
+
+Hay que entender que la pagina de Tor.myl es muy inestable y no siempre carga correctamente sus cartas y/o tiene cartas faltantes. A veces habrá que correr el programa varias veces para conseguir correctamente la información de las cartas. Si el programa no puede encontrar una edición en especifico, contactar a la gente de Tor para que agreguen esas cartas y/o ediciones. Tambien a mi, para yo poder agregar esa edición a las opciones si es que lo olvidé o no estaba configurado correctamente.
 
 ## Dependencias
 
