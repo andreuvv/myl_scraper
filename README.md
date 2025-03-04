@@ -1,5 +1,4 @@
-# Mitos y Leyendas
-## Card Scrapper
+# Mitos y Leyendas - Card Scraper
 
 Este proyecto es un scraper web diseñado para extraer detalles de cartas del sitio de tor.myl.cl utilizando Selenium y BeautifulSoup. El scraper recupera enlaces y detalles de cartas, manejando reintentos para solicitudes fallidas y registrando errores.
 
@@ -30,8 +29,8 @@ Para configurar el proyecto necesitas tener Python instalado, luego sigue estos 
 
 1. Clona el repositorio:
    ```
-   git clone https://github.com/andreuvv/myl_scrapper.git
-   cd myl_scrapper
+   git clone https://github.com/andreuvv/myl_scraper.git
+   cd myl_scraper
    ```
 
 2. Instala las dependencias requeridas:
