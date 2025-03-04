@@ -16,6 +16,7 @@ myl_scrapper
 ├── src
 │   ├── __init__.py
 │   ├── main.py
+│   ├── input_helpers.py
 │   ├── scraper.py
 │   ├── utils.py
 │   └── enums.py
