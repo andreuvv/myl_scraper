@@ -9,9 +9,9 @@ La información de las cartas se recopila en archivos JSON especificos a la edic
 ## Estructura del Proyecto
 
 ```
-myl_scrapper
-├── scrapped_cards
-├── scrapping_logs
+myl_scraper
+├── scraped_cards
+├── scraping_logs
 ├── src
 │   ├── __init__.py
 │   ├── main.py

@@ -36,8 +36,8 @@ def main():
 
         time.sleep(random.uniform(1.5, 3))
 
-    os.makedirs("scrapped_cards", exist_ok=True)
-    json_filename = os.path.join("scrapped_cards", f"cards_{edition}.json")
+    os.makedirs("scraped_cards", exist_ok=True)
+    json_filename = os.path.join("scraped_cards", f"cards_{edition}.json")
     with open(json_filename, "w", encoding="utf-8") as f:
         json.dump(cards_data, f, indent=4, ensure_ascii=False)
 

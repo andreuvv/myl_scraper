@@ -21,8 +21,8 @@ def set_edition(edition):
     global EDITION, CARDS_PAGE, log_filename
     EDITION = edition
     CARDS_PAGE = f"{BASE_URL}/cartas/{EDITION}"
-    os.makedirs("scrapping_logs", exist_ok=True)
-    log_filename = os.path.join("scrapping_logs", f"scrapping_{EDITION}_errors.log")
+    os.makedirs("scraping_logs", exist_ok=True)
+    log_filename = os.path.join("scraping_logs", f"scraping_{EDITION}_errors.log")
     logging.basicConfig(filename=log_filename, level=logging.WARNING, 
                         format="%(asctime)s - %(levelname)s - %(message)s")
 
