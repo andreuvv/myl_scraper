@@ -1,4 +1,5 @@
-# Descripción del Proyecto
+# Mitos y Leyendas
+## Card Scrapper
 
 Este proyecto es un scraper web diseñado para extraer detalles de cartas del sitio de tor.myl.cl utilizando Selenium y BeautifulSoup. El scraper recupera enlaces y detalles de cartas, manejando reintentos para solicitudes fallidas y registrando errores.
 
@@ -10,6 +11,8 @@ La información de las cartas se recopila en archivos JSON especificos a la edic
 
 ```
 myl_scrapper
+├── scrapped_cards
+├── scrapping_logs
 ├── src
 │   ├── __init__.py
 │   ├── main.py
@@ -46,7 +49,7 @@ El script the pedirá seleccionar un formato y luego una edición de la lista, c
 
 ## Disclaimer
 
-Hay que entender que la pagina de Tor.myl es muy inestable y no siempre carga correctamente sus cartas y/o tiene cartas faltantes. A veces habrá que correr el programa varias veces para conseguir correctamente la información de las cartas. Si el programa no puede encontrar una edición en especifico, contactar a la gente de Tor para que agreguen esas cartas y/o ediciones. Tambien a mi, para yo poder agregar esa edición a las opciones si es que lo olvidé o no estaba configurado correctamente.
+Hay que entender que la pagina de tor.myl.cl es muy inestable y no siempre carga correctamente sus cartas y/o tiene cartas faltantes. A veces habrá que correr el programa varias veces para conseguir correctamente la información de las cartas. Si el programa no puede encontrar una edición en especifico, contactar a la gente de Tor para que agreguen esas cartas y/o ediciones. Tambien a mi, para yo poder agregar esa edición a las opciones si es que lo olvidé o no estaba configurado correctamente.
 
 ## Dependencias
 
