@@ -12,6 +12,7 @@ La información de las cartas se recopila en archivos JSON especificos a la edic
 myl_scraper
 ├── scraped_cards
 ├── scraping_logs
+├── images
 ├── src
 │   ├── __init__.py
 │   ├── main.py
