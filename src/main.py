@@ -32,7 +32,7 @@ def main():
                 print(card_info)
                 print(f"\033[92m✓ Extracción de la información de la carta {index + 1}/{len(card_links)} exitoso\033[0m")
                 if save_images and card_info.get("image_path"):
-                    download_image(card_info["image_path"], f"images_{edition}", f"{card_info['name']}.jpg")
+                    download_image(card_info["image_path"], os.path.join("images", edition), f"{card_info['name']}.jpg")
         else:
             logging.warning(f"Saltando carta {link} debido a extracción fallida.")
             print(f"\033[91mSaltando carta {link} debido a extracción fallida.\033[0m")

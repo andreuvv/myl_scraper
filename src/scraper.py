@@ -35,9 +35,6 @@ def download_image(url, folder, filename):
         url (str): La URL de la imagen.
         folder (str): La carpeta donde se guardará la imagen.
         filename (str): El nombre del archivo de la imagen.
-
-    Returns:
-        None
     """
     response = requests.get(url)
     if response.status_code == 200:
@@ -45,7 +42,7 @@ def download_image(url, folder, filename):
         with open(os.path.join(folder, filename), 'wb') as f:
             f.write(response.content)
     else:
-        logging.warning(f"Failed to download image from {url}")
+        logging.warning(f"Error al descargar imagen desde {url}")
 
 def get_card_links():
     driver.get(CARDS_PAGE)
