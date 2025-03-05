@@ -7,7 +7,7 @@ import json
 import time
 import logging
 
-def scrape_edition(edition, save_images):
+def scrape_edition(format_name, edition, save_images):
     print(f"Extrayendo edición: {edition}")
     start_time = time.time()
     print("Consiguiendo links de las cartas...")
@@ -30,15 +30,17 @@ def scrape_edition(edition, save_images):
                 print(card_info)
                 print(f"\033[92m✓ Extracción de la información de la carta {index + 1}/{len(card_links)} exitoso\033[0m")
                 if save_images and card_info.get("image_path"):
-                    download_image(card_info["image_path"], os.path.join("images", edition), f"{card_info['name']}.jpg")
+                    image_folder = os.path.join("images", format_name, edition)
+                    image_filename = f"{card_info['name'].replace(' ', '_')}.jpg"
+                    download_image(card_info["image_path"], image_folder, image_filename)
         else:
             logging.warning(f"Saltando carta {link} debido a extracción fallida.")
             print(f"\033[91mSaltando carta {link} debido a extracción fallida.\033[0m")
 
         time.sleep(random.uniform(1.5, 3))
 
-    os.makedirs("scraped_cards", exist_ok=True)
-    json_filename = os.path.join("scraped_cards", f"cards_{edition}.json")
+    os.makedirs(os.path.join("scraped_cards", format_name), exist_ok=True)
+    json_filename = os.path.join("scraped_cards", format_name, f"cards_{edition}.json")
     with open(json_filename, "w", encoding="utf-8") as f:
         json.dump(cards_data, f, indent=4, ensure_ascii=False)
 
@@ -55,16 +57,17 @@ def scrape_edition(edition, save_images):
 
 def main():
     format_enum = select_format()
+    format_name = format_enum.__name__
     scrape_full_format = input("¿Quieres extraer todo el formato? (y/n): ").strip().lower() == 'y'
     save_images = input("¿Quieres guardar las imágenes de las cartas? (y/n): ").strip().lower() == 'y'
 
     if scrape_full_format:
         for edition in format_enum:
             set_edition(edition.value)
-            scrape_edition(edition.value, save_images)
+            scrape_edition(format_name, edition.value, save_images)
     else:
         edition = select_edition(format_enum)
-        scrape_edition(edition, save_images)
+        scrape_edition(format_name, edition, save_images)
 
 if __name__ == "__main__":
     main()
