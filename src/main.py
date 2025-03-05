@@ -1,5 +1,5 @@
 import os
-from scraper import get_card_links, retry_scraping
+from scraper import get_card_links, retry_scraping, download_image
 from utils import fix_empty_cards
 from input_helpers import select_format, select_edition
 import random
@@ -10,6 +10,7 @@ import logging
 def main():
     format_enum = select_format()
     edition = select_edition(format_enum)
+    save_images = input("¿Quieres guardar las imágenes de las cartas? (y/n): ").strip().lower() == 'y'
     start_time = time.time()
     print("Consiguiendo links de las cartas...")
     card_links = get_card_links()
@@ -29,7 +30,9 @@ def main():
             else:
                 cards_data.append(card_info)
                 print(card_info)
-                print(f"\033[92m✓ Extracción de la información de la carta exitoso{index + 1}/{len(card_links)}\033[0m")
+                print(f"\033[92m✓ Extracción de la información de la carta {index + 1}/{len(card_links)} exitoso\033[0m")
+                if save_images and card_info.get("image_path"):
+                    download_image(card_info["image_path"], f"images_{edition}", f"{card_info['name']}.jpg")
         else:
             logging.warning(f"Saltando carta {link} debido a extracción fallida.")
             print(f"\033[91mSaltando carta {link} debido a extracción fallida.\033[0m")

@@ -10,6 +10,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 import time
 import logging
+import requests
 
 BASE_URL = "https://tor.myl.cl"
 
@@ -25,6 +26,26 @@ def set_edition(edition):
     log_filename = os.path.join("scraping_logs", f"scraping_{EDITION}_errors.log")
     logging.basicConfig(filename=log_filename, level=logging.WARNING, 
                         format="%(asctime)s - %(levelname)s - %(message)s")
+    
+def download_image(url, folder, filename):
+    """
+    Descarga una imagen desde una URL y la guarda en una carpeta específica.
+
+    Args:
+        url (str): La URL de la imagen.
+        folder (str): La carpeta donde se guardará la imagen.
+        filename (str): El nombre del archivo de la imagen.
+
+    Returns:
+        None
+    """
+    response = requests.get(url)
+    if response.status_code == 200:
+        os.makedirs(folder, exist_ok=True)
+        with open(os.path.join(folder, filename), 'wb') as f:
+            f.write(response.content)
+    else:
+        logging.warning(f"Failed to download image from {url}")
 
 def get_card_links():
     driver.get(CARDS_PAGE)
