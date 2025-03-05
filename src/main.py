@@ -1,5 +1,5 @@
 import os
-from scraper import get_card_links, retry_scraping, download_image
+from scraper import get_card_links, retry_scraping, download_image, set_edition
 from utils import fix_empty_cards
 from input_helpers import select_format, select_edition
 import random
@@ -7,10 +7,8 @@ import json
 import time
 import logging
 
-def main():
-    format_enum = select_format()
-    edition = select_edition(format_enum)
-    save_images = input("¿Quieres guardar las imágenes de las cartas? (y/n): ").strip().lower() == 'y'
+def scrape_edition(edition, save_images):
+    print(f"Extrayendo edición: {edition}")
     start_time = time.time()
     print("Consiguiendo links de las cartas...")
     card_links = get_card_links()
@@ -19,7 +17,7 @@ def main():
 
     cards_data = []
     for index, link in enumerate(card_links):
-        print(f"Scraping {index + 1}/{len(card_links)}: {link}")
+        print(f"Extrayendo carta {index + 1}/{len(card_links)}: {link}")
         card_info = retry_scraping(link)
         if card_info:
             if card_info["name"] == link:
@@ -54,6 +52,19 @@ def main():
 
     print(f"Extracción completada, información guardada en '{json_filename}'.")
     print(f"Tiempo total transcurrido: {elapsed_time_formatted}")
+
+def main():
+    format_enum = select_format()
+    scrape_full_format = input("¿Quieres extraer todo el formato? (y/n): ").strip().lower() == 'y'
+    save_images = input("¿Quieres guardar las imágenes de las cartas? (y/n): ").strip().lower() == 'y'
+
+    if scrape_full_format:
+        for edition in format_enum:
+            set_edition(edition.value)
+            scrape_edition(edition.value, save_images)
+    else:
+        edition = select_edition(format_enum)
+        scrape_edition(edition, save_images)
 
 if __name__ == "__main__":
     main()

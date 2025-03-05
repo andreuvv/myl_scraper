@@ -75,6 +75,17 @@ def scrape_card_details(card_url):
         logging.warning(f"Timeout waiting for card details on {card_url}")
         return {"name": card_url} 
 
+    card_info = {
+        "name": card_url,
+        "image_path": None,
+        "rarity": None,
+        "type": None,
+        "race": None,
+        "attack": None,
+        "cost": None,
+        "ability": None
+    }
+
     try:
         name_div = driver.find_element(By.CLASS_NAME, 'content-title')
         name = name_div.text.split('/')[-1].strip()
