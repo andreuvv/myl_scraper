@@ -6,6 +6,7 @@ import random
 import json
 import time
 import logging
+import re
 
 def scrape_edition(format_name, edition, save_images):
     print(f"Extrayendo edición: {edition}")
@@ -31,7 +32,8 @@ def scrape_edition(format_name, edition, save_images):
                 print(f"\033[92m✓ Extracción de la información de la carta {index + 1}/{len(card_links)} exitoso\033[0m")
                 if save_images and card_info.get("image_path"):
                     image_folder = os.path.join("images", format_name, edition)
-                    image_filename = f"{card_info['name'].replace(' ', '_')}.jpg"
+                    sanitized_name = re.sub(r'[<>:"/\\|?*]', '_', card_info['name'])
+                    image_filename = f"{sanitized_name.replace(' ', '_')}.jpg"
                     download_image(card_info["image_path"], image_folder, image_filename)
         else:
             logging.warning(f"Saltando carta {link} debido a extracción fallida.")
