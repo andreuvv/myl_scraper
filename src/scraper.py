@@ -1,4 +1,9 @@
 import os
+import random
+import json
+import time
+import logging
+import re
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -8,8 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
-import time
-import logging
+from utils import fix_empty_cards
 import requests
 
 BASE_URL = "https://tor.myl.cl"
@@ -54,7 +58,7 @@ def get_card_links():
     links = [card["href"] if card["href"].startswith("http") else BASE_URL + card["href"] for card in card_elements if "href" in card.attrs]
     return links
 
-def retry_scraping(card_url, retries=5):
+def start_and_or_retry_scraping(card_url, retries=5):
     for attempt in range(retries):
         try:
             return scrape_card_details(card_url)
@@ -159,3 +163,52 @@ def scrape_card_details(card_url):
         "cost": cost,
         "ability": ability
     }
+
+def scrape_edition(format_name, edition, save_images):
+    print(f"Extrayendo edición: {edition}")
+    start_time = time.time()
+    print("Consiguiendo links de las cartas...")
+    card_links = get_card_links()
+    
+    print(f"Se encontraron {len(card_links)} cartas. Extrayendo los detalles...")
+
+    cards_data = []
+    for index, link in enumerate(card_links):
+        print(f"Extrayendo carta {index + 1}/{len(card_links)}: {link}")
+        card_info = start_and_or_retry_scraping(link)
+        if card_info:
+            if card_info["name"] == link:
+                logging.warning(f"Falló la extracción de la información de la carta {link}, URL quedó en el campo de nombre.")
+                cards_data.append(card_info)
+                print(card_info)
+                print(f"\033[91mFalló la extracción de la información de la carta {link}, URL quedó en el campo de nombre.\033[0m")
+            else:
+                cards_data.append(card_info)
+                print(card_info)
+                print(f"\033[92m✓ Extracción de la información de la carta {index + 1}/{len(card_links)} exitoso\033[0m")
+                if save_images and card_info.get("image_path"):
+                    image_folder = os.path.join("images", format_name, edition)
+                    sanitized_name = re.sub(r'[<>:"/\\|?*]', '_', card_info['name'])
+                    image_filename = f"{sanitized_name.replace(' ', '_')}.jpg"
+                    download_image(card_info["image_path"], image_folder, image_filename)
+        else:
+            logging.warning(f"Saltando carta {link} debido a extracción fallida.")
+            print(f"\033[91mSaltando carta {link} debido a extracción fallida.\033[0m")
+
+        time.sleep(random.uniform(1.5, 3))
+
+    os.makedirs(os.path.join("scraped_cards", format_name), exist_ok=True)
+    json_filename = os.path.join("scraped_cards", format_name, f"cards_{edition}.json")
+    with open(json_filename, "w", encoding="utf-8") as f:
+        json.dump(cards_data, f, indent=4, ensure_ascii=False)
+
+    fix_empty_cards(json_filename, start_and_or_retry_scraping)
+
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    hours, remainder = divmod(elapsed_time, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    elapsed_time_formatted = f"{int(hours):02}:{int(minutes):02}:{int(seconds):02}"
+
+    print(f"Extracción completada, información guardada en '{json_filename}'.")
+    print(f"Tiempo total transcurrido: {elapsed_time_formatted}")

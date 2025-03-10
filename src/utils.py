@@ -1,7 +1,6 @@
-from scraper import retry_scraping
 import json
 
-def fix_empty_cards(json_filename):
+def fix_empty_cards(json_filename, retry_scraping_func):
     """
     Lee el archivo JSON, identifica las cartas con el campo "type" nulo e 
     intenta recuperar la información para esas cartas.
@@ -17,7 +16,7 @@ def fix_empty_cards(json_filename):
     for card in cards_data:
         if card["type"] is None:
             print(f"Reintentado la extracción de información de la carta: {card['name']}")
-            fixed_card = retry_scraping(card["name"])
+            fixed_card = retry_scraping_func(card["name"])
             fixed_cards_data.append(fixed_card)
         else:
             fixed_cards_data.append(card)
