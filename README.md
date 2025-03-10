@@ -50,6 +50,8 @@ El script the pedirá seleccionar un formato y luego una edición de la lista, c
 
 ## Disclaimer
 
+Este script no está diseñado para su uso malicioso, solo para la obtención de información de cartas que se encuentra de manera pública y gratuita en la web. Su uso indebido puede llegar a ser ilegal y traerá consecuencias para su usuario. El autor no se hace responsable por su uso indebido.
+
 Hay que entender que la pagina de tor.myl.cl es muy inestable y no siempre carga correctamente sus cartas y/o tiene cartas faltantes. A veces habrá que correr el programa varias veces para conseguir correctamente la información de las cartas. Si el programa no puede encontrar una edición en especifico, contactar a la gente de Tor para que agreguen esas cartas y/o ediciones. Tambien a mi, para yo poder agregar esa edición a las opciones si es que lo olvidé o no estaba configurado correctamente.
 
 ## Dependencias
