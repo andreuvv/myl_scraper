@@ -46,7 +46,7 @@ Para ejecutar el scraper, ejecuta el siguiente comando:
 python src/main.py
 ```
 
-El script the pedirá seleccionar un formato y luego una edición de la lista, con eso entrará tor.myl.cl/cartas/{edicion_seleccionada} e iniciará el proceso de extracción, obteniendo enlaces y detalles de cartas, y guardando los resultados en un archivo JSON.
+El script the pedirá seleccionar un formato, luego te preguntará si quieres extraer el formato entero, si les das a si (y), te preguntará si además quieres descargar las imagenes, si pones que si (y), comenzará el proceso de extracción edición por edición del formato, si pones que no (n) a la extracción completa del formato, te preguntará que eligas una edición especifica del formato, después de configuradas las opciones, entrará tor.myl.cl/cartas/****** e iniciará el proceso de extracción, obteniendo enlaces y detalles de cartas, y guardando la información de las cartas en un archivo JSON, dentro de scraped_cards/{formato}/{edicion}, si la opcion de descargar las imagenes fue configurada, las imagenes quedarán guardadas dentro de la carpeta images/{formato}/{edicion}.
 
 ## Disclaimer
 
