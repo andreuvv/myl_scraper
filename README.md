@@ -1,10 +1,10 @@
 # Mitos y Leyendas - Card Scraper
 
-Este proyecto es un scraper web diseñado para extraer detalles de cartas del sitio de tor.myl.cl utilizando Selenium y BeautifulSoup. El scraper recupera enlaces y detalles de cartas, manejando reintentos para solicitudes fallidas y registrando errores.
+Este proyecto es un scraper web diseñado para extraer detalles de cartas del sitio tor.myl.cl utilizando Selenium y BeautifulSoup. El scraper recupera enlaces y detalles de cartas, maneja reintentos para solicitudes fallidas y registra errores.
 
-La intención de este scraper es simplemente la de recopilar información de cartas y sus imagenes de especificos productos y/o ediciones de Mitos y Leyendas para su posterios uso personal.
+La intención de este scraper es recopilar información de cartas y sus imágenes de productos y/o ediciones específicas de Mitos y Leyendas para su uso personal.
 
-La información de las cartas se recopila en archivos JSON especificos a la edición o producto.
+La información de las cartas se recopila en archivos JSON específicos a la edición o producto.
 
 ## Estructura del Proyecto
 
@@ -26,7 +26,7 @@ myl_scraper
 
 ## Instalación
 
-Para configurar el proyecto necesitas tener Python instalado, luego sigue estos pasos:
+Para configurar el proyecto, necesitas tener [Python](https://www.python.org/downloads/) instalado. Luego, sigue estos pasos:
 
 1. Clona el repositorio:
    ```
@@ -41,18 +41,25 @@ Para configurar el proyecto necesitas tener Python instalado, luego sigue estos 
 
 ## Uso
 
-Para ejecutar el scraper, ejecuta el siguiente comando:
+Para ejecutar el scraper, utiliza el siguiente comando:
 ```
 python src/main.py
 ```
 
-El script the pedirá seleccionar un formato, luego te preguntará si quieres extraer el formato entero, si les das a si (y), te preguntará si además quieres descargar las imagenes, si pones que si (y), comenzará el proceso de extracción edición por edición del formato, si pones que no (n) a la extracción completa del formato, te preguntará que eligas una edición especifica del formato, después de configuradas las opciones, entrará tor.myl.cl/cartas/****** e iniciará el proceso de extracción, obteniendo enlaces y detalles de cartas, y guardando la información de las cartas en un archivo JSON, dentro de scraped_cards/{formato}/{edicion}, si la opcion de descargar las imagenes fue configurada, las imagenes quedarán guardadas dentro de la carpeta images/{formato}/{edicion}.
+El script te guiará a través de los siguientes pasos:
+
+1. **Seleccionar un formato**: Se te pedirá que selecciones un formato de cartas.
+2. **Extraer todo el formato**: Se te preguntará si deseas extraer todas las ediciones del formato seleccionado. Responde `y` (sí) o `n` (no).
+   - Si respondes `y`, se te preguntará si también deseas descargar las imágenes de las cartas. Responde `y` (sí) o `n` (no).
+   - Si respondes `n`, se te preguntará si deseas descargar las imágenes de las cartas. Responde `y` (sí) o `n` (no). Luego, se te pedirá que elijas una edición específica del formato.
+
+Después de configurar las opciones, el script accederá a `tor.myl.cl/cartas/{edicion}` e iniciará el proceso de extracción, obteniendo enlaces y detalles de las cartas. La información se guardará en un archivo JSON dentro de `scraped_cards/{formato}/{edicion}`. Si optaste por descargar las imágenes, estas se guardarán en la carpeta `images/{formato}/{edicion}`.
 
 ## Disclaimer
 
-Este script no está diseñado para su uso malicioso, solo para la obtención de información de cartas que se encuentra de manera pública y gratuita en la web. Su uso indebido puede llegar a ser ilegal y traerá consecuencias para su usuario. El autor no se hace responsable por su uso indebido.
+Este script está diseñado únicamente para la obtención de información de cartas que se encuentra de manera pública y gratuita en la web. No está destinado para uso malicioso. El uso indebido del script puede ser ilegal y traer consecuencias para el usuario. El autor no se hace responsable por el uso indebido del script.
 
-Hay que entender que la pagina de tor.myl.cl es muy inestable y no siempre carga correctamente sus cartas y/o tiene cartas faltantes. A veces habrá que correr el programa varias veces para conseguir correctamente la información de las cartas. Si el programa no puede encontrar una edición en especifico, contactar a la gente de Tor para que agreguen esas cartas y/o ediciones. Tambien a mi, para yo poder agregar esa edición a las opciones si es que lo olvidé o no estaba configurado correctamente.
+Es importante tener en cuenta que la página de tor.myl.cl puede ser inestable y no siempre cargar correctamente sus cartas o puede tener cartas faltantes. En ocasiones, será necesario ejecutar el programa varias veces para obtener correctamente la información de las cartas. Si el programa no puede encontrar una edición específica, contacta a la gente de Tor para que agreguen esas cartas o ediciones. También puedes contactarme para agregar esa edición a las opciones si es que lo olvidé o no estaba configurado correctamente.
 
 ## Dependencias
 
@@ -66,4 +73,4 @@ Asegúrate de instalar estos paquetes utilizando el `requirements.txt` proporcio
 
 ## Registro de Errores
 
-El scraper registra cualquier error encontrado durante el proceso de scraping en un archivo de registro llamado `scrapping_<edition>_errors.log`. Este archivo puede ser utilizado para solucionar problemas con intentos específicos de scraping de cartas.
+El scraper registra cualquier error encontrado durante el proceso de scraping en un archivo de registro en la ruta `scraping_logs/scraping_<edition>_errors.log`. Este archivo puede ser utilizado para solucionar problemas con intentos específicos de scraping de cartas.
